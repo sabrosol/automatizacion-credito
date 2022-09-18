@@ -1,67 +1,17 @@
-pipeline {
-    agent any
-    tools {
-        maven 'maven-3.8.6'
+node{
+    def mvnHome
+    stage("preparacion"){
+    //    git 'https://github.com/sabrosol/automatizacion-credito.git'        mvnHome = tool 'maven-3.8.6'
     }
-    stages {
-        stage('configuration') {
-            steps {
-                echo 'BRANCH NAME: ' + env.BRANCH_NAME
-                echo sh(returnStdout: true, script: 'env')
+    stage("Build"){
+        if (env.BRANCH_NAME == 'development') {
+            if(isUnix()){
+                sh "'${mvnHome}/bin/mvn' -version"
+            } else {
+                bat(/"${mvnHome}\bin\mvn" clean package/)
             }
-        }
-        stage('maven') {
-            steps {
-                sh 'mvn -version'
-            }
-        }
-        stage('Testing') {
-            steps {
-                script {
-                    sh 'echo "Testing"'
-                    sh "cat file.txt"
-                }
-            }
-        }
-
-        stage("build"){
-            when {
-                branch 'main'
-            }
-
-            steps{
-                sh 'echo "Build Started"'
-            }
-        }
-
-        stage("Deploy"){
-            when {
-                branch 'main'
-            }
-
-            steps{
-                sh 'echo "Deploying App"'
-            }
+        } else {
+            echo 'I execute elsewhere'
         }
     }
-
-    post{
-        success{
-            setBuildStatus("Build succeeded", "SUCCESS");
-        }
-
-        failure {
-            setBuildStatus("Build failed", "FAILURE");
-        }
-    }
-}
-
-void setBuildStatus(String message, String state) {
-    step([
-        $class: "GitHubCommitStatusSetter",
-        reposSource: [$class: "ManuallyEnteredRepositorySource", url: "https://https://github.com/titomatu/automatizacion-credito"],
-        contextSource: [$class: "ManuallyEnteredCommitContextSource", context: "ci/jenkins/build-status"],
-        errorHandlers: [[$class: "ChangingBuildStatusErrorHandler", result: "UNSTABLE"]],
-        statusResultSource: [$class: "ConditionalStatusResultSource", results: [[$class: "AnyBuildResult", message: message, state: state]]]
-    ]);
 }
