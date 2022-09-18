@@ -9,7 +9,7 @@ node{
             if(isUnix()){
                 sh "'${mvnHome}/bin/mvn' -version"
             } else {
-                bat(/"${mvnHome}\bin\mvn" clean package/)
+                bat(/"${mvnHome}\bin\mvn" clean package -DskipTests/)
             }
         } else {
             echo 'I execute elsewhere'
