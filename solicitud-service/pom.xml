@@ -23,6 +23,7 @@
         <parallel.tests>4</parallel.tests>
         <webdriver.base.url></webdriver.base.url>
     </properties>
+    <packaging>war</packaging>
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -228,39 +229,39 @@
                 </configuration>
             </plugin>
             <!-- plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-plugin</artifactId>
-                <version>3.0.0-M7</version>
-                <configuration>
-                    <properties>
-                        <test>edu.patrones.demo.solicitudservice.SolicitudOfertaTestSuite</test>
-                        <skip>true</skip>
-                        <testFailureIgnore>true</testFailureIgnore>
-                        <configurationParameters>
-                            junit.jupiter.execution.parallel.enabled = true
-                            junit.jupiter.execution.parallel.mode.default = concurrent
-                            junit.jupiter.execution.parallel.config.strategy=fixed
-                            junit.jupiter.execution.parallel.config.fixed.parallelism=5
-                        </configurationParameters>
-                    </properties>
-                </configuration>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-surefire-plugin</artifactId>
+            <version>3.0.0-M7</version>
+            <configuration>
+            <properties>
+            <test>edu.patrones.demo.solicitudservice.SolicitudOfertaTestSuite</test>
+            <skip>true</skip>
+            <testFailureIgnore>true</testFailureIgnore>
+            <configurationParameters>
+                                       junit.jupiter.execution.parallel.enabled = true
+                                       junit.jupiter.execution.parallel.mode.default = concurrent
+                                       junit.jupiter.execution.parallel.config.strategy=fixed
+                                       junit.jupiter.execution.parallel.config.fixed.parallelism=5
+            </configurationParameters>
+            </properties>
+            </configuration>
             </plugin>
             <plugin>
-                <groupId>net.serenity-bdd.maven.plugins</groupId>
-                <artifactId>serenity-maven-plugin</artifactId>
-                <version>${serenity.version}</version>
-                <configuration>
-                    <tags>${tags}</tags>
-                </configuration>
-                <executions>
-                    <execution>
-                        <id>serenity-reports</id>
-                        <phase>post-integration-test</phase>
-                        <goals>
-                            <goal>aggregate</goal>
-                        </goals>
-                    </execution>
-                </executions>
+            <groupId>net.serenity-bdd.maven.plugins</groupId>
+            <artifactId>serenity-maven-plugin</artifactId>
+            <version>${serenity.version}</version>
+            <configuration>
+            <tags>${tags}</tags>
+            </configuration>
+            <executions>
+            <execution>
+            <id>serenity-reports</id>
+            <phase>post-integration-test</phase>
+            <goals>
+            <goal>aggregate</goal>
+            </goals>
+            </execution>
+            </executions>
             </plugin-->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
